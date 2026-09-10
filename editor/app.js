@@ -464,8 +464,10 @@
       });
       items.splice(0, items.length, ...next);
     };
+    let refreshKwRows = () => {};
     const commit = () => {
       syncFromText();
+      refreshKwRows(false);
       scalarChanged();
     };
     textarea.addEventListener("input", commit);
@@ -508,6 +510,7 @@
       (items || []).forEach(item => {
         if (typeof item === "object" && item.text) item.highlights = detectHighlights(item.text);
       });
+      refreshKwRows(true);
       scalarChanged();
     });
     toolbar.append(
@@ -517,8 +520,49 @@
       autoHighlightBtn
     );
     wrap.append(toolbar, textarea);
+
+    // —— 重点词:逐行直接编辑;第 N 个输入框对应上方第 N 条内容 ——
+    const kwHead = element("div", { className: "kw-head" });
+    kwHead.append(element("span", { text: "重点词（逐行编辑）" }));
+    const kwList = element("div", { className: "kw-list" });
+    const kwRows = [];
+    refreshKwRows = (reset) => {
+      const list = items || [];
+      if (reset || kwRows.length !== list.length) {
+        kwRows.length = 0;
+        kwList.replaceChildren();
+        list.forEach((item, index) => {
+          const row = element("div", { className: "kw-row" });
+          row.append(element("span", { className: "kw-line-no", text: `${index + 1}` }));
+          const summary = element("span", { className: "kw-line-text" });
+          const input = element("input");
+          input.type = "text";
+          input.className = "kw-input";
+          input.placeholder = "重点词，逗号分隔；留空则该行不加粗";
+          input.value = (item && typeof item === "object" && Array.isArray(item.highlights)) ? item.highlights.join(", ") : "";
+          input.addEventListener("input", () => {
+            if (typeof list[index] === "string") list[index] = bulletObject(list[index]);
+            const target = list[index];
+            if (!target || typeof target !== "object") return;
+            target.highlights = input.value.split(/[,，]/).map(value => value.trim()).filter(Boolean);
+            scalarChanged();
+          });
+          row.append(summary, input);
+          kwList.append(row);
+          kwRows.push({ summary, input, index });
+        });
+      }
+      kwRows.forEach(entry => {
+        const item = list[entry.index];
+        const text = (item && typeof item === "object" && item.text) || (typeof item === "string" ? item : "");
+        entry.summary.textContent = text.replace(/\s+/g, " ").slice(0, 28);
+        entry.summary.title = text;
+      });
+    };
+    refreshKwRows(true);
+    wrap.append(kwHead, kwList);
     // 说明行(轻量,不占用太多空间)
-    wrap.append(element("p", { className: "field-hint", text: "每行将作为独立一条渲染；工具栏操作作用于光标所在行或多行选区。" }));
+    wrap.append(element("p", { className: "field-hint", text: "每行将作为独立一条渲染；工具栏操作作用于光标所在行或多行选区。重点词需在该行文本中真实出现，否则导出校验会提示。" }));
     return wrap;
   }
 
