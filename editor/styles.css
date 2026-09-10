@@ -198,7 +198,7 @@ button { cursor: pointer; }
 .subsection .field-hint { margin: 6px 0 0; color: #8a8f94; font-size: 11px; line-height: 1.5; }
 .link-editor-row { display: grid; grid-template-columns: .7fr 1.5fr auto; gap: 8px; align-items: end; margin-bottom: 8px; }
 .photo-editor { display: grid; gap: 10px; }
-.photo-preview { display: grid; place-items: center; width: 104px; height: 120px; overflow: hidden; border: 1px solid var(--line); border-radius: 6px; color: var(--muted); background: var(--soft); }
+.photo-preview { display: grid; place-items: center; width: 104px; height: 120px; overflow: hidden; border: 1px solid var(--line); border-radius: 6px; color: var(--muted); background: #fff; }
 .photo-preview img { width: 100%; height: 100%; object-fit: cover; transform-origin: center; }
 .crop-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
 .crop-grid input[type="range"] { width: 100%; }
