@@ -749,13 +749,8 @@
                   if (source.dates) heading.append(el('span', 'card-role', `｜${source.dates}`));
                   main.append(heading);
                   if ((source.bullets || []).filter(Boolean).length) main.append(bulletList(source.bullets));
-                  // 技术关键词:优先用条目显式 keywords;缺失时从该条已有文本自动识别补显(不改数据)
+                  // 技术关键词:仅使用条目显式 keywords,不再从文本自动识别补显
                   const customKw = (Array.isArray(source.keywords) ? source.keywords : []).map(x => String(x).trim()).filter(Boolean);
-                  if (!customKw.length) {
-                    const kwHay = String(source.title || '') + ' ' + (source.bullets || []).map(x => (typeof x === 'string' ? x : x.text || '')).join(' ');
-                    const kwPool = ['ROI','GMV','CTR','CVR','SQL','AI Agent','SOP','千川','投流','跑量','素材','脚本','A/B 测试','A/B Test','人群画像','首句钩子','数据分析','方法论沉淀','复盘','数据驱动'];
-                    kwPool.forEach(kw => { if (kwHay.indexOf(kw) !== -1 && customKw.length < 8 && customKw.indexOf(kw) === -1) customKw.push(kw); });
-                  }
                   if (customKw.length) main.append(el('div', 'keywords', '技术关键词：' + customKw.join(' / ')));
                   customCard.append(main);
                   cards.append(customCard);

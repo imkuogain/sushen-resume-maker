@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const TEMPLATE_URL = "../skills/sushen-resume-maker/assets/resume_template.html?v=20260907-autokeywords";
+  const TEMPLATE_URL = "../skills/sushen-resume-maker/assets/resume_template.html?v=20260910-nocustomkw";
   const LOGO_CATALOG_URL = "../assets/company-logos/catalog.json?v=20260825-logo-catalog-v2";
   const SAMPLE_URL = "sample.resume.json";
   const STORAGE_KEY = "sushen-resume-editor-v1";
@@ -900,9 +900,9 @@
             field("时间（可选）", item.dates, value => { item.dates = value; })
           ));
           wrap.append(bulletEditor("要点", item.bullets));
-          // 技术关键词(可选):留空时模板按该条目文本自动识别补显;此处可手动填或自动识别写入
+          // 技术关键词(可选):只有显式填写或点“自动识别”写入的内容才会进入正式简历,模板不再兜底补显
           item.keywords ||= [];
-          const kwBox = field("技术关键词（逗号分隔；留空则按文本自动识别补显）", item.keywords.join(", "), value => {
+          const kwBox = field("技术关键词（逗号分隔；留空则不显示，可用右侧按钮自动识别写入）", item.keywords.join(", "), value => {
             item.keywords = value.split(/[,，]/).map(x => x.trim()).filter(Boolean);
           });
           const detectKw = () => {
