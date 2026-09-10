@@ -61,7 +61,7 @@ def validate_data(data: dict, errors: list[str]) -> None:
         except (TypeError, ValueError):
             add(errors, "profile.photo.crop 必须是数字")
         else:
-            if not (0 <= x <= 100 and 0 <= y <= 100 and 1 <= zoom <= 2):
+            if not (0 <= x <= 100 and 0 <= y <= 100 and 0.5 <= zoom <= 2):
                 add(errors, "profile.photo.crop 超出允许范围")
 
     for index, item in enumerate(data.get("endorsements", [])):

@@ -637,7 +637,7 @@
         image.alt = `${p.name || '候选人'}照片`;
         const crop = photo.crop || {};
         image.style.objectPosition = `${Number(crop.x ?? 50)}% ${Number(crop.y ?? 50)}%`;
-        image.style.transform = `scale(${Math.max(1, Math.min(2, Number(crop.zoom || 1)))})`;
+        image.style.transform = `scale(${Math.max(0.5, Math.min(2, Number(crop.zoom || 1)))})`;
         image.addEventListener('error', () => frame.remove(), { once: true });
         frame.append(image);
         masthead.append(frame);

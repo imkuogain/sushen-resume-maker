@@ -579,7 +579,7 @@
     block.append(preview, input, actions);
     if (photo.src) {
       const cropGrid = element("div", { className: "crop-grid" });
-      [["水平位置", "x", 0, 100, 1], ["垂直位置", "y", 0, 100, 1], ["缩放", "zoom", 1, 2, 0.05]].forEach(([label, key, min, max, step]) => {
+      [["水平位置", "x", 0, 100, 1], ["垂直位置", "y", 0, 100, 1], ["缩放", "zoom", 0.5, 2, 0.05]].forEach(([label, key, min, max, step]) => {
         const wrapper = element("label", { className: "field" });
         wrapper.append(element("span", { text: label }));
         const range = element("input");

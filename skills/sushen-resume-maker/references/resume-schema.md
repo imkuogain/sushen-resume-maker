@@ -69,7 +69,7 @@
 ```
 
 - 从 PDF / DOCX 提取的图片只能作为候选，必须由用户选择后才能设为 `confirmed: true`；未确认或无法识别时隐藏照片。
-- 照片只允许 PNG、JPEG 或 WebP 数据 URL；`crop` 控制水平位置、垂直位置和 1–2 倍缩放。
+- 照片只允许 PNG、JPEG 或 WebP 数据 URL；`crop` 控制水平位置、垂直位置和 0.5–2 倍缩放。
 - `endorsements` 只接受 `source_grounded` 或 `user_attested`，并必须包含具体 `source`。没有奖项或事实背书证据时使用 `profile.summary` 展示事实型人设，不能伪装成第三方评价。
 
 `verification` 可取：
